@@ -9,7 +9,6 @@ const InputAuto = ({
                        setSelectedVal,
                        selectedVal,
                        name,
-                       blurHandler,
                    }) => {
     const [suggestions, setSugesstions] = useState([]);
     const [isHideSuggs, setIsHideSuggs] = useState(false);
@@ -40,7 +39,6 @@ const InputAuto = ({
                 <label htmlFor="tag-input">{label}</label>
                 <input
                     placeholder={pholder}
-                    onBlur={e => blurHandler(e)}
                     type="search"
                     value={selectedVal}
                     onChange={handleChange}

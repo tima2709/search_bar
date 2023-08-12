@@ -18,6 +18,8 @@ function App() {
     const [selectedToDirty, setSelectedToDirty] = useState(false)
     const [selectedFromError, setSelectedFromError] = useState('Откуда не может быть пустым')
     const [selectedToError, setSelectedToError] = useState('Куда не может быть пустым')
+    const [selectedDateDirty, setSelectedDateDirty] = useState(false)
+    const [selectedDateToError, setSelectedDateToError] = useState('Укажите время')
 
 
 
@@ -45,11 +47,23 @@ function App() {
     let b = (JSON.stringify(toSelectedDate))
 
     const handlerGo = () => {
-        if(selectedFrom.length && selectedTo.length) {
-            setFromToDate([...selectedFrom, ...selectedTo, a ,b])
-        } else {
-            return selectedFromError
+        if(selectedFrom.length == 0){
+            setSelectedFromDirty(true);
+            return;
         }
+        if(selectedTo.length == 0) {
+            setSelectedToDirty(true);
+            return;
+        }
+        if(selectedDate) {
+            setSelectedDateDirty(true)
+            return;
+        }
+        setFromToDate([...selectedFrom, ...selectedTo, a ,b]);
+        setSelectedFromDirty(false);
+        setSelectedToDirty(false);
+
+
     }
     console.log(fromToDate)
 
@@ -57,14 +71,14 @@ function App() {
 
     const blurHandler = (e) => {
         // eslint-disable-next-line default-case
-        switch (e.target.name) {
+        /*switch (e.target.name) {
             case 'selectedFrom':
                 setSelectedFromDirty(true)
                 break
             case 'selectedTo':
                 setSelectedToDirty(true)
                 break
-        }
+        }*/
     }
 
 
@@ -86,7 +100,6 @@ function App() {
                         onChange={getChanges}
                         selectedVal={selectedFrom}
                         setSelectedVal={setSelectedFrom}
-                        blurHandler={blurHandler}
                     />
                 </div>
                 <div>
@@ -100,11 +113,11 @@ function App() {
                         onChange={getChanges}
                         selectedVal={selectedTo}
                         setSelectedVal={setSelectedTo}
-                        blurHandler={blurHandler}
                     />
                 </div>
                 <div className={'datePicker-items'}>
                     <input type="checkbox" onChange={(e) => handleChange(e)}/>
+                    {( selectedDateDirty && selectedDateToError) && <div style={{color: 'red'}}>{selectedDateToError}</div>}
                     <DatePicker
                         className={'datePicker'}
                         selected={selectedDate}
@@ -115,6 +128,7 @@ function App() {
                         scrollableMonthYearDropdown
                     />
                     { !oneWay &&
+
                         <DatePicker
                             className={'datePicker'}
                             selected={toSelectedDate}
