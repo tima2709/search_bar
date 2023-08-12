@@ -45,6 +45,7 @@ function App() {
 
     let a = (JSON.stringify(selectedDate))
     let b = (JSON.stringify(toSelectedDate))
+    console.log(a.length, 'a')
 
     const handlerGo = () => {
         if(selectedFrom.length == 0){
@@ -55,7 +56,7 @@ function App() {
             setSelectedToDirty(true);
             return;
         }
-        if(selectedDate) {
+        if(a) {
             setSelectedDateDirty(true)
             return;
         }
